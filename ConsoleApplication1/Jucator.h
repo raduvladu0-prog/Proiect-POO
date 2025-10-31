@@ -18,6 +18,7 @@ public:
     string getNume() const;
     int getVarsta() const;
     string getPozitie() const;
-};
+};//inca un atribut pentru goluri marcate -de implementat-
+// cel mai bun jucator al campionatului (gol averaj -de implementat )
 
 #endif
