@@ -16,10 +16,11 @@ public:
 	void afiseazaEchipa() const;
 	void adaugaPuncte(int p);
 	int calculeazaRatingEchipa() const;
-	void genereazaJucatoriRandom(int nrJucatori);
+	void genereazaJucatoriRandom(int nr_jucatori);
 	string getNume() const;
 	int getPuncte()const;
+	void joacaMeci(Echipa& e1,Echipa &e2);
 };
-//afisare cea mai buna echipa functie?comparativ cu rating 
+
 
 #endif

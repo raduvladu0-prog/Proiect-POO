@@ -3,19 +3,25 @@
 #include <string>
 #include "Jucator.h"
 #include "Echipa.h"
+#include <cmath>
 using namespace std;
 
 int main()
 {
-	Jucator j1("Ion Popescu", 25, "Atacant", 85);
-	j1.afiseazaInfo();
-	Echipa e("Gama");
-	e.genereazaJucatoriRandom(5);
-	e.afiseazaEchipa();
-	cout << "Rating mediu echipa: " << e.calculeazaRatingEchipa() << endl;
-	return 0;
 
 	
+	Echipa e("Gama");
+	Echipa e2("Beta");
+
+	e.genereazaJucatoriRandom(11);
+	e.afiseazaEchipa();
+	cout << "Rating mediu echipa: " << e.calculeazaRatingEchipa() << endl;
+	e2.genereazaJucatoriRandom(11);
+	e2.afiseazaEchipa();
+	cout << "Rating mediu echipa: " << e2.calculeazaRatingEchipa() << endl;
+	e.joacaMeci(e, e2);
+	
+	return 0;
 
 }
 

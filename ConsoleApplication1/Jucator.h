@@ -10,14 +10,20 @@ private:
     int varsta;
     string pozitie;
     int rating; // 1 - 100
+    int goluri;
 
 public:
-    Jucator(const string& nume, int varsta, const string& pozitie, int rating);
+   Jucator(const string& nume, int varsta, const string& pozitie, int rating)
+        : nume(nume), varsta(varsta), pozitie(pozitie), rating(rating) {
+    }
     void afiseazaInfo() const;
     int getRating() const;
     string getNume() const;
     int getVarsta() const;
     string getPozitie() const;
+    int getGoluri()const;
+    void marcheazaGol();
+     
 };//inca un atribut pentru goluri marcate -de implementat-
 // cel mai bun jucator al campionatului (gol averaj -de implementat )
 
