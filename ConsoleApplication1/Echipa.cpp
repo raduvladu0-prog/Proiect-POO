@@ -1,5 +1,6 @@
 ﻿#include "Echipa.h"
 #include <iostream>
+#include <algorithm>
 using namespace std;
 // Adaugă jucător în echipă
 void Echipa::adaugaJucator(const Jucator& j) {
@@ -100,5 +101,32 @@ void Echipa::joacaMeci(Echipa& e1, Echipa& e2) {
     if (golEch1 > golEch2) e1.adaugaPuncte(3);
     else if (golEch2 > golEch1) e2.adaugaPuncte(3);
     else { e1.adaugaPuncte(1); e2.adaugaPuncte(1); }
+}
+Echipa::Echipa() {
+    static vector<string> tari = {
+        "Brazilia", "Argentina", "Franta", "Germania", "Spania",
+        "Italia", "Anglia", "Portugalia", "Olanda", "Belgia",
+        "Croatia", "Uruguay", "Danemarca", "Elvetia", "Polonia",
+        "SUA", "Japonia", "Coreea de Sud", "Maroc", "Mexic",
+        "Nigeria", "Suedia", "Norvegia", "Serbia", "Romania",
+        "Turcia", "Grecia", "Cehia", "Austria", "Columbia"
+    };
+
+    static bool initializat = false;
+    if (!initializat) {
+        srand(time(0));
+        random_shuffle(tari.begin(), tari.end());
+        initializat = true;
+    }
+
+    if (!tari.empty()) {
+        nume = tari.back();
+        tari.pop_back(); // asigură că nu se repetă țările
+    }
+    else {
+        nume = "Echipa generica"; // fallback
+    }
+
+    puncte = 0;
 }
 

@@ -10,7 +10,7 @@ private:
     int varsta;
     string pozitie;
     int rating; // 1 - 100
-    int goluri;
+    int goluri=0;
 
 public:
    Jucator(const string& nume, int varsta, const string& pozitie, int rating)

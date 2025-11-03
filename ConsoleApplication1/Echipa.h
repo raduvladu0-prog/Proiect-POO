@@ -11,7 +11,7 @@ class Echipa
 	vector<Jucator>jucatori;
 	int puncte;
 public:
-	Echipa(const string& n) :nume(n), puncte(0) {}
+	Echipa();
 	void adaugaJucator(const Jucator& jucatori);
 	void afiseazaEchipa() const;
 	void adaugaPuncte(int p);
@@ -19,7 +19,7 @@ public:
 	void genereazaJucatoriRandom(int nr_jucatori);
 	string getNume() const;
 	int getPuncte()const;
-	void joacaMeci(Echipa& e1,Echipa &e2);
+  static void joacaMeci(Echipa& e1,Echipa &e2);
 };
 
 
