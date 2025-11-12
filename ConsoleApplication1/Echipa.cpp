@@ -2,7 +2,7 @@
 #include <iostream>
 #include <algorithm>
 using namespace std;
-// Adaugă jucător în echipă
+
 void Echipa::adaugaJucator(const Jucator& j) {
     jucatori.push_back(j);
 }
@@ -67,14 +67,12 @@ int Echipa :: getPuncte() const { return puncte; }
 void Echipa::joacaMeci(Echipa& e1, Echipa& e2) {
     int golEch1 = 0, golEch2 = 0;
     int ratingPortar1 = 0, ratingPortar2 = 0;
-    // găsim portarii
     for (auto& j : e1.jucatori) {
         if (j.getPozitie() == "Portar") { ratingPortar1 = j.getRating(); break; }
     }
     for (auto& j : e2.jucatori) {
         if (j.getPozitie() == "Portar") { ratingPortar2 = j.getRating(); break; }
     }
-    // goluri echipa 1
     for (auto& j : e1.jucatori) {
         if (j.getPozitie() =="Atacant" && j.getRating() > ratingPortar2) {
             int gol = ceil((j.getRating() - ratingPortar2) / 20.0);
@@ -84,7 +82,6 @@ void Echipa::joacaMeci(Echipa& e1, Echipa& e2) {
             else cout << j.getNume() << " a marcat " << gol << " goluri pentru " << e1.getNume() << endl;
         }
     }
-    // goluri echipa 2
     for (auto& j : e2.jucatori) {
         if (j.getPozitie() == "Atacant" && j.getRating() > ratingPortar1) {
             int gol = ceil((j.getRating() - ratingPortar1) / 20.0);
@@ -95,8 +92,8 @@ void Echipa::joacaMeci(Echipa& e1, Echipa& e2) {
         }
     }
     
-    cout << "\nScor final: " << e1.getNume() << " " << golEch1
-        << " - " << golEch2 << " " << e2.getNume() << endl;
+    cout << "\nScor final: " << e1.getNume() << " " << golEch1 << " - " << golEch2 << " " << e2.getNume() << endl;
+        
     // puncte
     if (golEch1 > golEch2) e1.adaugaPuncte(3);
     else if (golEch2 > golEch1) e2.adaugaPuncte(3);
@@ -121,12 +118,16 @@ Echipa::Echipa() {
 
     if (!tari.empty()) {
         nume = tari.back();
-        tari.pop_back(); // asigură că nu se repetă țările
+        tari.pop_back(); 
     }
+    /*
     else {
         nume = "Echipa generica"; // fallback
+        //e novoie?
     }
+    */
 
     puncte = 0;
 }
+//trebuie sa ma asigur ca si numele jucatorilor nu se pot repeta, de implementat
 

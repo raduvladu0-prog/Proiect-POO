@@ -11,7 +11,7 @@ using namespace std;
 
 int main()
 {
-    srand(static_cast<unsigned int>(time(0))); // inițializare generator random
+    srand(static_cast<unsigned int>(time(0))); // initializare jucatori random
     vector<Echipa> echipe;
     int optiune;
     int nrEchipe = 0;
@@ -38,7 +38,7 @@ int main()
 
             echipe.clear();
             for (int i = 0; i < nrEchipe; i++) {
-                Echipa e;                  // folosește constructorul fără parametru
+                Echipa e;                 
                 e.genereazaJucatoriRandom(11);
                 echipe.push_back(e);
             }
@@ -111,3 +111,5 @@ int main()
 // funtie impart generarea echipei
 //functie pentru numele jucatorilor sa nu se repete
 // functie daca mai multe echipe au acelasi nr de puncte
+// functie pt restrangerea main ului  (sa fac o functie din main)
+//de implementat

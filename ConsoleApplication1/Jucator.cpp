@@ -12,7 +12,7 @@ string Jucator ::  getNume() const { return nume; }
 int Jucator::getVarsta() const { return varsta; }
 string Jucator:: getPozitie() const { return pozitie; }
 int Jucator::getRating() const { return rating; }
-int Jucator::getGoluri()const { return goluri; };//
+int Jucator::getGoluri()const { return goluri; };
 void Jucator::marcheazaGol(){
     goluri++;
 }

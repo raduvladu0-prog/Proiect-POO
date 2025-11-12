@@ -25,6 +25,6 @@ public:
     void marcheazaGol();
      
 };//inca un atribut pentru goluri marcate -de implementat-
-// cel mai bun jucator al campionatului (gol averaj -de implementat )
+// cel mai bun jucator al campionatului (gol averaj -de implementat )//maybe
 
 #endif
