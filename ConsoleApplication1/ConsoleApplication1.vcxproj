@@ -124,13 +124,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Atacant.cpp" />
     <ClCompile Include="Echipa.cpp" />
+    <ClCompile Include="Fundas.cpp" />
     <ClCompile Include="Jucator.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mijlocas.cpp" />
+    <ClCompile Include="Portar.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Atacant.h" />
     <ClInclude Include="Echipa.h" />
+    <ClInclude Include="Fundas.h" />
     <ClInclude Include="Jucator.h" />
+    <ClInclude Include="Mijlocas.h" />
+    <ClInclude Include="Portar.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

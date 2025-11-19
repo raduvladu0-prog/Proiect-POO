@@ -1,18 +1,23 @@
-﻿#include <iostream>
-#include "Jucator.h"
-using namespace std;
-void Jucator::afiseazaInfo() const {
-    cout << "Jucator: " << nume
-        << " | Varsta: " << varsta
-        << " | Pozitie: " << pozitie
-        << " | Rating: " << rating << endl;
+﻿#include "Jucator.h"
+#include <iostream>
+
+Jucator::Jucator(const std::string& nume, int varsta, int rating)
+    : nume(nume), varsta(varsta), rating(rating), goluri(0) {
 }
 
-string Jucator ::  getNume() const { return nume; }
-int Jucator::getVarsta() const { return varsta; }
-string Jucator:: getPozitie() const { return pozitie; }
-int Jucator::getRating() const { return rating; }
-int Jucator::getGoluri()const { return goluri; };
-void Jucator::marcheazaGol(){
-    goluri++;
+Jucator::~Jucator() {}
+
+void Jucator::afiseazaInfo() const {
+    std::cout << "Jucator: " << nume
+        << " | Varsta: " << varsta
+        << " | Pozitie: " << getPozitie()
+        << " | Rating: " << rating
+        << " | Goluri: " << goluri << std::endl;
 }
+
+int Jucator::getRating() const { return rating; }
+std::string Jucator::getNume() const { return nume; }
+int Jucator::getVarsta() const { return varsta; }
+int Jucator::getGoluri() const { return goluri; }
+
+void Jucator::marcheazaGol() { goluri++; }

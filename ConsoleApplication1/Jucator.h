@@ -1,30 +1,29 @@
-#ifndef Jucator_H
-#define Jucator_H
+#ifndef JUCATOR_H
+#define JUCATOR_H
 
 #include <string>
-using namespace std;
 
 class Jucator {
-private:
-    string nume;
+protected:
+    std::string nume;
     int varsta;
-    string pozitie;
-    int rating; // 1 - 100
-    int goluri=0;
+    int rating;
+    int goluri;
 
 public:
-   Jucator(const string& nume, int varsta, const string& pozitie, int rating)
-        : nume(nume), varsta(varsta), pozitie(pozitie), rating(rating) {
-    }
-    void afiseazaInfo() const;
-    int getRating() const;
-    string getNume() const;
-    int getVarsta() const;
-    string getPozitie() const;
-    int getGoluri()const;
-    void marcheazaGol();
-     
-};//inca un atribut pentru goluri marcate -de implementat-
-// cel mai bun jucator al campionatului (gol averaj -de implementat )//maybe
+    Jucator(const std::string& nume, int varsta, int rating);
+    virtual ~Jucator();
 
-#endif
+    virtual std::string getPozitie() const = 0;
+
+    void afiseazaInfo() const;
+
+    int getRating() const;
+    std::string getNume() const;
+    int getVarsta() const;
+    int getGoluri() const;
+
+    virtual void marcheazaGol();//implementare pentru atacant
+};
+
+#endif 

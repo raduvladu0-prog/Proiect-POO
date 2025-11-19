@@ -24,12 +24,36 @@
     <ClCompile Include="Echipa.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Mijlocas.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Atacant.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Fundas.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Portar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Jucator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Echipa.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mijlocas.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Atacant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Fundas.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Portar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
