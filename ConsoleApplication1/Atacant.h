@@ -9,6 +9,8 @@ public:
 
     std::string getPozitie() const override;
     void marcheazaGol() override;
+    int executaPenalty() const;
 };
+
 
 #endif

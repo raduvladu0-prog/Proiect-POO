@@ -8,6 +8,7 @@ public:
     Portar(const std::string& nume, int varsta, int rating);
 
     std::string getPozitie() const override;//nu modific nimic legat de nume rating etc..
+    bool aparaPenalty(int fortaSut) const;
 };
 
 #endif // PORTAR_H

@@ -86,29 +86,70 @@ void Echipa::joacaMeci(Echipa& e1, Echipa& e2) {
     int golEch1 = 0, golEch2 = 0;
     int ratingPortar1 = 0, ratingPortar2 = 0;
 
-    for (auto j : e1.jucatori)
-        if (j->getPozitie() == "Portar") { ratingPortar1 = j->getRating(); break; }
-    for (auto j : e2.jucatori)
-        if (j->getPozitie() == "Portar") { ratingPortar2 = j->getRating(); break; }
+    Jucator* portar1 = nullptr;
+    Jucator* portar2 = nullptr;
 
+    // găsim portarii
     for (auto j : e1.jucatori)
-        if (j->getPozitie() == "Atacant" && j->getRating() > ratingPortar2) {
+        if (j->getPozitie() == "Portar") { portar1 = j; ratingPortar1 = j->getRating(); break; }
+    for (auto j : e2.jucatori)
+        if (j->getPozitie() == "Portar") { portar2 = j; ratingPortar2 = j->getRating(); break; }
+
+    // contor penalty-uri
+    int penaltyEch1 = 0, penaltyEch2 = 0;
+
+    // === Atacanții echipei 1 ===
+    for (auto j : e1.jucatori) {
+        if (j->getPozitie() == "Atacant") {
+            if (golEch1 >= 4) break;
+
+            // penalty: maxim 3 pe echipă
+            if (portar2 && portar2->getRating() > j->getRating() && penaltyEch1 < 3) {
+                cout << portar2->getNume() << " a aparat penalty-ul executat de "
+                    << j->getNume() << "!\n";
+                penaltyEch1++;
+                continue;
+            }
+
             int gol = ceil((j->getRating() - ratingPortar2) / 20.0);
+            if (golEch1 + gol > 4) gol = 4 - golEch1;
+            if (gol <= 0) continue;
+
             for (int k = 0; k < gol; k++) j->marcheazaGol();
             golEch1 += gol;
-            cout << j->getNume() << " a marcat " << gol
-                << " goluri pentru " << e1.getNume() << endl;
-        }
 
-    for (auto j : e2.jucatori)
-        if (j->getPozitie() == "Atacant" && j->getRating() > ratingPortar1) {
+            cout << j->getNume() << " a marcat " << gol
+                << (gol == 1 ? " gol" : " goluri")
+                << " pentru " << e1.getNume() << endl;
+        }
+    }
+
+    // === Atacanții echipei 2 ===
+    for (auto j : e2.jucatori) {
+        if (j->getPozitie() == "Atacant") {
+            if (golEch2 >= 4) break;
+
+            if (portar1 && portar1->getRating() > j->getRating() && penaltyEch2 < 3) {
+                cout << portar1->getNume() << " a aparat penalty-ul executat de "
+                    << j->getNume() << "!\n";
+                penaltyEch2++;
+                continue;
+            }
+
             int gol = ceil((j->getRating() - ratingPortar1) / 20.0);
+            if (golEch2 + gol > 4) gol = 4 - golEch2;
+            if (gol <= 0) continue;
+
             for (int k = 0; k < gol; k++) j->marcheazaGol();
             golEch2 += gol;
-            cout << j->getNume() << " a marcat " << gol
-                << " goluri pentru " << e2.getNume() << endl;
-        }
 
+            cout << j->getNume() << " a marcat " << gol
+                << (gol == 1 ? " gol" : " goluri")
+                << " pentru " << e2.getNume() << endl;
+        }
+    }
+
+    // === Scor final ===
     cout << "\nScor final: " << e1.getNume() << " " << golEch1
         << " - " << golEch2 << " " << e2.getNume() << endl;
 

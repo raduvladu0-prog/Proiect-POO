@@ -11,3 +11,6 @@ std::string Atacant::getPozitie() const {
 void Atacant::marcheazaGol() {
     goluri++;
 }
+int Atacant::executaPenalty() const {
+    return getRating() + (rand() % 20);
+}
