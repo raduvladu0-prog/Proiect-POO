@@ -53,3 +53,7 @@ Generarea jucătorilor cu atribute random realiste.
 Statistici suplimentare pentru echipe și jucători (ex: cel mai bun jucător, golaveraj, rating total).
 
 Posibilitatea de a salva și încărca campionatul dintr-un fișier.
+Adaugat :clase derivate pt atacant,fundas,portar,mijlocas cu atribute specifice fiecarei pozitii.Daca ratingul unui atacant <rating portar ->apara 
+Penalty-uri
+pase de gol-mijlocas
+interceptari-fundas
