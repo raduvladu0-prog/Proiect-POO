@@ -8,6 +8,9 @@ public:
     Mijlocas(const std::string& nume, int varsta, int rating);
 
     std::string getPozitie() const override;
+
+    // Functia ceruta: returneaza true daca ratingurile sunt apropiate
+    bool verificaPasaDecisiva(int ratingAtacant) const;
 };
 
-#endif 
+#endif

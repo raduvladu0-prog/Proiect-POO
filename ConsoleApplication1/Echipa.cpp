@@ -89,13 +89,12 @@ void Echipa::joacaMeci(Echipa& e1, Echipa& e2) {
     Jucator* portar1 = nullptr;
     Jucator* portar2 = nullptr;
 
-    // găsim portarii
+    // Găsim portarii
     for (auto j : e1.jucatori)
         if (j->getPozitie() == "Portar") { portar1 = j; ratingPortar1 = j->getRating(); break; }
     for (auto j : e2.jucatori)
         if (j->getPozitie() == "Portar") { portar2 = j; ratingPortar2 = j->getRating(); break; }
 
-    // contor penalty-uri
     int penaltyEch1 = 0, penaltyEch2 = 0;
 
     // === Atacanții echipei 1 ===
@@ -103,7 +102,6 @@ void Echipa::joacaMeci(Echipa& e1, Echipa& e2) {
         if (j->getPozitie() == "Atacant") {
             if (golEch1 >= 4) break;
 
-            // penalty: maxim 3 pe echipă
             if (portar2 && portar2->getRating() > j->getRating() && penaltyEch1 < 3) {
                 cout << portar2->getNume() << " a aparat penalty-ul executat de "
                     << j->getNume() << "!\n";
@@ -121,10 +119,26 @@ void Echipa::joacaMeci(Echipa& e1, Echipa& e2) {
             cout << j->getNume() << " a marcat " << gol
                 << (gol == 1 ? " gol" : " goluri")
                 << " pentru " << e1.getNume() << endl;
+
+            // --- LOGICA NOUA PENTRU PASA DE GOL (Echipa 1) ---
+            for (auto m : e1.jucatori) {
+                // Verificam daca e Mijlocas folosind dynamic_cast sau verificand pozitia
+                Mijlocas* mijlocas = dynamic_cast<Mijlocas*>(m);
+                if (mijlocas) {
+                    // Apelam functia implementata in Mijlocas
+                    if (mijlocas->verificaPasaDecisiva(j->getRating())) {
+                        mijlocas->adaugaPasaGol();
+                        cout << "   (Assist: " << mijlocas->getNume() << ")" << endl;
+                          
+                        break;
+                    }
+                }
+            }
+          
         }
     }
 
-    // === Atacanții echipei 2 ===
+    // === Atacantii echipei 2 ===
     for (auto j : e2.jucatori) {
         if (j->getPozitie() == "Atacant") {
             if (golEch2 >= 4) break;
@@ -146,10 +160,23 @@ void Echipa::joacaMeci(Echipa& e1, Echipa& e2) {
             cout << j->getNume() << " a marcat " << gol
                 << (gol == 1 ? " gol" : " goluri")
                 << " pentru " << e2.getNume() << endl;
+
+            // --- LOGICA NOUA PENTRU PASA DE GOL (Echipa 2) ---
+            for (auto m : e2.jucatori) {
+                Mijlocas* mijlocas = dynamic_cast<Mijlocas*>(m);
+                if (mijlocas) {
+                    if (mijlocas->verificaPasaDecisiva(j->getRating())) {
+                        mijlocas->adaugaPasaGol();
+                        cout << "   (Assist: " << mijlocas->getNume() << ")" << endl;
+                            
+                        break;
+                    }
+                }
+            }
+            // --------------------------------------------------
         }
     }
 
-    // === Scor final ===
     cout << "\nScor final: " << e1.getNume() << " " << golEch1
         << " - " << golEch2 << " " << e2.getNume() << endl;
 
