@@ -1,16 +1,22 @@
 #include "Portar.h"
-#include <cstdlib>
-Portar::Portar(const std::string& nume, int varsta, int rating)
-    : Jucator(nume, varsta, rating) {
-}
+#include <iostream>
 
+Portar::Portar(const std::string& nume, int varsta, int rating)
+    : Jucator(nume, varsta, rating), penaltyuriAparate(0) {
+}
 
 std::string Portar::getPozitie() const {
     return "Portar";
 }
-bool Portar::aparaPenalty(int fortaSut) const {
-    int sansaPortar = getRating() + (rand() % 30);
-    int sansaAtacant = fortaSut + (rand() % 30);
 
-    return sansaPortar > sansaAtacant;
+void Portar::incrementeazaPenaltyuriAparate() {
+    penaltyuriAparate++;
+}
+
+void Portar::afiseazaInfo() const {
+    std::cout << "    " << getNume()
+        << " | " << getPozitie()
+        << " | Rating: " << getRating()
+        << " | Pen. Aparate: " << penaltyuriAparate
+        << " | G: " << getGoluri() << std::endl;
 }

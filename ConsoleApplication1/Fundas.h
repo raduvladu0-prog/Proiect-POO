@@ -6,8 +6,7 @@
 class Fundas : public Jucator {
 public:
     Fundas(const std::string& nume, int varsta, int rating);
-
     std::string getPozitie() const override;
 };
 
-#endif 
+#endif

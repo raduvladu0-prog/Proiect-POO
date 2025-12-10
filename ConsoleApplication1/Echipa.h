@@ -27,6 +27,7 @@ public:
     void genereazaJucatoriRandom(int nr_jucatori);
 
     void adaugaPuncte(int p);
+
     std::string getNume() const;
     int getPuncte() const;
 
