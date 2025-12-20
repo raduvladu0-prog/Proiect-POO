@@ -16,7 +16,7 @@ public:
     Jucator(const std::string& nume, int varsta, int rating);
     virtual ~Jucator();
 
-    virtual std::string getPozitie() const = 0; // Metoda pur virtuala
+    virtual std::string getPozitie() const = 0; 
 
     virtual void marcheazaGol();
     void adaugaPasaGol();

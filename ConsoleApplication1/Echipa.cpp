@@ -1,6 +1,7 @@
 ﻿#include "Echipa.h"
 #include "Mijlocas.h" 
 #include "Portar.h"   
+#include "Fundas.h"
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -59,7 +60,7 @@ int Echipa::calculeazaRatingEchipa() const {
     int suma = 0;
     for (auto j : jucatori)
         suma += j->getRating();
-    return suma / jucatori.size();
+    return suma / (int)jucatori.size();
 }
 
 Jucator* Echipa::genereazaJucatorRandom() {
@@ -94,7 +95,6 @@ int Echipa::getPuncte() const { return puncte; }
 void Echipa::joacaMeci(Echipa& e1, Echipa& e2) {
     int golEch1 = 0, golEch2 = 0;
 
-    // Identificam portarii
     Jucator* p1Gen = nullptr;
     Jucator* p2Gen = nullptr;
 
@@ -109,26 +109,38 @@ void Echipa::joacaMeci(Echipa& e1, Echipa& e2) {
     // === ECHIPA 1 ATACĂ ===
     for (auto j : e1.jucatori) {
         if (j->getPozitie() == "Atacant") {
-            if (golEch1 >= 5) break;
+            if (golEch1 >= 4) break; // Limită mai mică de goluri per jucător
 
-            // PENALTY
-            if (p2Gen && p2Gen->getRating() > j->getRating() && (rand() % 10 < 3) && pen1 < 2) {
-                std::cout << "   ! Penalty aparat de " << p2Gen->getNume() << std::endl;
-                pen1++;
+            // TACKLE - Probabilitate crescută la 50%
+            bool opritDeFundas = false;
+            for (auto f : e2.jucatori) {
+                if (f->getPozitie() == "Fundas") {
+                    if (rand() % 100 < 50) {
+                        if (Fundas* fundasPtr = dynamic_cast<Fundas*>(f)) {
+                            fundasPtr->adaugaTackle();
+                            opritDeFundas = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (opritDeFundas) continue;
+
+            // PENALTY - Șansă mai mare pentru portar (4/10)
+            if (p2Gen && (rand() % 10 < 4) && pen1 < 2) {
                 if (Portar* p = dynamic_cast<Portar*>(p2Gen)) {
                     p->incrementeazaPenaltyuriAparate();
                 }
                 continue;
             }
 
-            // GOL
-            int sansaGol = (j->getRating() - rP2) + (rand() % 40);
-            if (sansaGol > 20) {
+            // GOL - Prag ridicat la 65
+            int sansaGol = (j->getRating() - rP2) + (rand() % 30);
+            if (sansaGol > 65) {
                 j->marcheazaGol();
                 golEch1++;
-                std::cout << "   -> Gol " << j->getNume() << " pt " << e1.getNume() << std::endl;
+                std::cout << "   -> Gol " << j->getNume() << " (" << e1.getNume() << ")" << std::endl;
 
-                // ASSIST
                 for (auto m : e1.jucatori) {
                     if (Mijlocas* mij = dynamic_cast<Mijlocas*>(m)) {
                         if (mij->verificaPasaDecisiva(j->getRating())) {
@@ -144,22 +156,37 @@ void Echipa::joacaMeci(Echipa& e1, Echipa& e2) {
     // === ECHIPA 2 ATACĂ ===
     for (auto j : e2.jucatori) {
         if (j->getPozitie() == "Atacant") {
-            if (golEch2 >= 5) break;
+            if (golEch2 >= 4) break;
 
-            if (p1Gen && p1Gen->getRating() > j->getRating() && (rand() % 10 < 3) && pen2 < 2) {
-                std::cout << "   ! Penalty aparat de " << p1Gen->getNume() << std::endl;
-                pen2++;
+            // TACKLE
+            bool opritDeFundas = false;
+            for (auto f : e1.jucatori) {
+                if (f->getPozitie() == "Fundas") {
+                    if (rand() % 100 < 50) {
+                        if (Fundas* fundasPtr = dynamic_cast<Fundas*>(f)) {
+                            fundasPtr->adaugaTackle();
+                            opritDeFundas = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (opritDeFundas) continue;
+
+            // PENALTY
+            if (p1Gen && (rand() % 10 < 4) && pen2 < 2) {
                 if (Portar* p = dynamic_cast<Portar*>(p1Gen)) {
                     p->incrementeazaPenaltyuriAparate();
                 }
                 continue;
             }
 
-            int sansaGol = (j->getRating() - rP1) + (rand() % 40);
-            if (sansaGol > 20) {
+            // GOL - Prag ridicat la 60
+            int sansaGol = (j->getRating() - rP1) + (rand() % 25);
+            if (sansaGol > 60) {
                 j->marcheazaGol();
                 golEch2++;
-                std::cout << "   -> Gol " << j->getNume() << " pt " << e2.getNume() << std::endl;
+                std::cout << "   -> Gol " << j->getNume() << " (" << e2.getNume() << ")" << std::endl;
 
                 for (auto m : e2.jucatori) {
                     if (Mijlocas* mij = dynamic_cast<Mijlocas*>(m)) {
@@ -173,13 +200,9 @@ void Echipa::joacaMeci(Echipa& e1, Echipa& e2) {
         }
     }
 
-    // SCOR FINAL
     std::cout << "REZULTAT FINAL: " << e1.getNume() << " " << golEch1 << " - " << golEch2 << " " << e2.getNume() << "\n";
 
-    // Update Puncte
     if (golEch1 > golEch2) e1.adaugaPuncte(3);
     else if (golEch2 > golEch1) e2.adaugaPuncte(3);
     else { e1.adaugaPuncte(1); e2.adaugaPuncte(1); }
-
-    // NU se mai actualizeaza golaverajul
 }
