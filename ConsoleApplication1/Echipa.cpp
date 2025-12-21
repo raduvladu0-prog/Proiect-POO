@@ -95,57 +95,98 @@ int Echipa::getPuncte() const { return puncte; }
 void Echipa::joacaMeci(Echipa& e1, Echipa& e2) {
     int golEch1 = 0, golEch2 = 0;
 
-    Jucator* p1Gen = nullptr;
-    Jucator* p2Gen = nullptr;
+    // Identificăm portarii
+    Jucator* p1 = nullptr, * p2 = nullptr;
+    for (auto j : e1.jucatori) if (j->getPozitie() == "Portar") p1 = j;
+    for (auto j : e2.jucatori) if (j->getPozitie() == "Portar") p2 = j;
 
-    for (auto j : e1.jucatori) if (j->getPozitie() == "Portar") p1Gen = j;
-    for (auto j : e2.jucatori) if (j->getPozitie() == "Portar") p2Gen = j;
+    // Simulăm 5 faze de atac per meci (pentru a asigura volum de goluri)
+    for (int faza = 1; faza <= 5; faza++) {
 
-    int rP1 = p1Gen ? p1Gen->getRating() : 50;
-    int rP2 = p2Gen ? p2Gen->getRating() : 50;
+        // --- ECHIPA 1 ATACĂ ---
+        // Alegem un atacant aleatoriu care participă la fază
+        std::vector<Jucator*> atacanțiE1;
+        for (auto j : e1.jucatori) if (j->getPozitie() == "Atacant") atacanțiE1.push_back(j);
 
-    int pen1 = 0, pen2 = 0;
+        if (!atacanțiE1.empty()) {
+            Jucator* atacantCurent = atacanțiE1[rand() % atacanțiE1.size()];
+            int rAtac = atacantCurent->getRating() + (rand() % 21 - 10);
 
-    // === ECHIPA 1 ATACĂ ===
-    for (auto j : e1.jucatori) {
-        if (j->getPozitie() == "Atacant") {
-            if (golEch1 >= 4) break; // Limită mai mică de goluri per jucător
+            // Verificăm dacă fundașii E2 opresc faza (TACKLE)
+            bool fazaOprita = false;
+            for (auto def : e2.jucatori) {
+                if (def->getPozitie() == "Fundas" && (rand() % 100 < 30)) { // 30% șansă de tackle per fundaș
+                    if (Fundas* fPtr = dynamic_cast<Fundas*>(def)) {
+                        fPtr->adaugaTackle();
+                        std::cout << "    [!] Tackle reusit: " << def->getNume() << " il deposedeaza pe " << atacantCurent->getNume() << "\n";
+                        fazaOprita = true;
+                        break;
+                    }
+                }
+            }
 
-            // TACKLE - Probabilitate crescută la 50%
-            bool opritDeFundas = false;
-            for (auto f : e2.jucatori) {
-                if (f->getPozitie() == "Fundas") {
-                    if (rand() % 100 < 50) {
-                        if (Fundas* fundasPtr = dynamic_cast<Fundas*>(f)) {
-                            fundasPtr->adaugaTackle();
-                            opritDeFundas = true;
-                            break;
+            if (!fazaOprita) {
+                // Dacă trece de fundași, portarul are o ultimă șansă (PARADĂ)
+                int rPortar2 = (p2 ? p2->getRating() : 50) + (rand() % 21 - 10);
+
+                if (rPortar2 > rAtac + 10 && (rand() % 100 < 40)) {
+                    std::cout << "    [!] Parada uimitoare: " << (p2 ? p2->getNume() : "Portarul") << " apara!\n";
+                }
+                else {
+                    // GOL!
+                    atacantCurent->marcheazaGol();
+                    golEch1++;
+                    std::cout << "    [GOL] " << atacantCurent->getNume() << " inscrie pentru " << e1.getNume() << "!\n";
+
+                    // Căutăm un mijlocaș pentru assist
+                    for (auto m : e1.jucatori) {
+                        if (Mijlocas* mij = dynamic_cast<Mijlocas*>(m)) {
+                            if (mij->verificaPasaDecisiva(atacantCurent->getRating())) {
+                                mij->adaugaPasaGol();
+                                break;
+                            }
                         }
                     }
                 }
             }
-            if (opritDeFundas) continue;
+        }
 
-            // PENALTY - Șansă mai mare pentru portar (4/10)
-            if (p2Gen && (rand() % 10 < 4) && pen1 < 2) {
-                if (Portar* p = dynamic_cast<Portar*>(p2Gen)) {
-                    p->incrementeazaPenaltyuriAparate();
+        // --- ECHIPA 2 ATACĂ ---
+        std::vector<Jucator*> atacanțiE2;
+        for (auto j : e2.jucatori) if (j->getPozitie() == "Atacant") atacanțiE2.push_back(j);
+
+        if (!atacanțiE2.empty()) {
+            Jucator* atacantCurent = atacanțiE2[rand() % atacanțiE2.size()];
+            int rAtac = atacantCurent->getRating() + (rand() % 21 - 10);
+
+            bool fazaOprita = false;
+            for (auto def : e1.jucatori) {
+                if (def->getPozitie() == "Fundas" && (rand() % 100 < 30)) {
+                    if (Fundas* fPtr = dynamic_cast<Fundas*>(def)) {
+                        fPtr->adaugaTackle();
+                        std::cout << "    [!] Tackle reusit: " << def->getNume() << " il deposedeaza pe " << atacantCurent->getNume() << "\n";
+                        fazaOprita = true;
+                        break;
+                    }
                 }
-                continue;
             }
 
-            // GOL - Prag ridicat la 65
-            int sansaGol = (j->getRating() - rP2) + (rand() % 30);
-            if (sansaGol > 65) {
-                j->marcheazaGol();
-                golEch1++;
-                std::cout << "   -> Gol " << j->getNume() << " (" << e1.getNume() << ")" << std::endl;
+            if (!fazaOprita) {
+                int rPortar1 = (p1 ? p1->getRating() : 50) + (rand() % 21 - 10);
+                if (rPortar1 > rAtac + 10 && (rand() % 100 < 40)) {
+                    std::cout << "    [!] Parada uimitoare: " << (p1 ? p1->getNume() : "Portarul") << " apara!\n";
+                }
+                else {
+                    atacantCurent->marcheazaGol();
+                    golEch2++;
+                    std::cout << "    [GOL] " << atacantCurent->getNume() << " inscrie pentru " << e2.getNume() << "!\n";
 
-                for (auto m : e1.jucatori) {
-                    if (Mijlocas* mij = dynamic_cast<Mijlocas*>(m)) {
-                        if (mij->verificaPasaDecisiva(j->getRating())) {
-                            mij->adaugaPasaGol();
-                            break;
+                    for (auto m : e2.jucatori) {
+                        if (Mijlocas* mij = dynamic_cast<Mijlocas*>(m)) {
+                            if (mij->verificaPasaDecisiva(atacantCurent->getRating())) {
+                                mij->adaugaPasaGol();
+                                break;
+                            }
                         }
                     }
                 }
@@ -153,54 +194,7 @@ void Echipa::joacaMeci(Echipa& e1, Echipa& e2) {
         }
     }
 
-    // === ECHIPA 2 ATACĂ ===
-    for (auto j : e2.jucatori) {
-        if (j->getPozitie() == "Atacant") {
-            if (golEch2 >= 4) break;
-
-            // TACKLE
-            bool opritDeFundas = false;
-            for (auto f : e1.jucatori) {
-                if (f->getPozitie() == "Fundas") {
-                    if (rand() % 100 < 50) {
-                        if (Fundas* fundasPtr = dynamic_cast<Fundas*>(f)) {
-                            fundasPtr->adaugaTackle();
-                            opritDeFundas = true;
-                            break;
-                        }
-                    }
-                }
-            }
-            if (opritDeFundas) continue;
-
-            // PENALTY
-            if (p1Gen && (rand() % 10 < 4) && pen2 < 2) {
-                if (Portar* p = dynamic_cast<Portar*>(p1Gen)) {
-                    p->incrementeazaPenaltyuriAparate();
-                }
-                continue;
-            }
-
-            // GOL - Prag ridicat la 60
-            int sansaGol = (j->getRating() - rP1) + (rand() % 25);
-            if (sansaGol > 60) {
-                j->marcheazaGol();
-                golEch2++;
-                std::cout << "   -> Gol " << j->getNume() << " (" << e2.getNume() << ")" << std::endl;
-
-                for (auto m : e2.jucatori) {
-                    if (Mijlocas* mij = dynamic_cast<Mijlocas*>(m)) {
-                        if (mij->verificaPasaDecisiva(j->getRating())) {
-                            mij->adaugaPasaGol();
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    std::cout << "REZULTAT FINAL: " << e1.getNume() << " " << golEch1 << " - " << golEch2 << " " << e2.getNume() << "\n";
+    std::cout << "\n>>> REZULTAT FINAL: " << e1.getNume() << " " << golEch1 << " - " << golEch2 << " " << e2.getNume() << " <<<\n";
 
     if (golEch1 > golEch2) e1.adaugaPuncte(3);
     else if (golEch2 > golEch1) e2.adaugaPuncte(3);
