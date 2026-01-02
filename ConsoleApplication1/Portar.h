@@ -13,7 +13,7 @@ public:
     std::string getPozitie() const override;
 
     void incrementeazaPenaltyuriAparate();
-    void afiseazaInfo() const override;
+    void afiseazaInfo();
 };
 
 #endif

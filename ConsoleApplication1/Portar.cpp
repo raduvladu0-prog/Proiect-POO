@@ -1,4 +1,4 @@
-#include "Portar.h"
+﻿#include "Portar.h"
 #include <iostream>
 
 Portar::Portar(const std::string& nume, int varsta, int rating)
@@ -13,10 +13,7 @@ void Portar::incrementeazaPenaltyuriAparate() {
     penaltyuriAparate++;
 }
 
-void Portar::afiseazaInfo() const {
-    std::cout << "    " << getNume()
-        << " | " << getPozitie()
-        << " | Rating: " << getRating()
-        << " | Pen. Aparate: " << penaltyuriAparate
-        << " | G: " << getGoluri() << std::endl;
+void Portar::afiseazaInfo()  {
+    Jucator::afiseazaInfo(); // Afișează nume, poziție, rating
+    std::cout << " | Pen. Aparate: " << penaltyuriAparate << std::endl;
 }

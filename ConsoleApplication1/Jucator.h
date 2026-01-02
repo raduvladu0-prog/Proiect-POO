@@ -10,9 +10,11 @@ protected:
     int varsta;
     int rating;
     int goluri;
-    int paseGol;
+  
+    
 
 public:
+    Jucator();
     Jucator(const std::string& nume, int varsta, int rating);
     virtual ~Jucator();
 
@@ -21,7 +23,7 @@ public:
     virtual void marcheazaGol();
     void adaugaPasaGol();
 
-    virtual void afiseazaInfo() const;
+    virtual void afiseazaInfo();
 
     int getRating() const;
     std::string getNume() const;

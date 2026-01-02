@@ -1,4 +1,4 @@
-#include "Fundas.h"
+﻿#include "Fundas.h"
 #include <iostream>
 
 Fundas::Fundas(const std::string& nume, int varsta, int rating)
@@ -13,10 +13,7 @@ void Fundas::adaugaTackle() {
     tackleuriReusite++;
 }
 
-void Fundas::afiseazaInfo() const {
-    std::cout << "    " << getNume()
-        << " | " << getPozitie()
-        << " | Rating: " << getRating()
-        << " | Tackle-uri: " << tackleuriReusite
-        << " | G: " << getGoluri() << std::endl;
+void Fundas::afiseazaInfo()  {
+    Jucator::afiseazaInfo(); 
+    std::cout << " | Tackle-uri: " << tackleuriReusite << std::endl;
 }

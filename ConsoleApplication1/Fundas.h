@@ -12,7 +12,7 @@ public:
     std::string getPozitie() const override;
 
     void adaugaTackle(); // Metodă nouă
-    void afiseazaInfo() const override; // Suprascriem afișarea pentru a vedea tackle-urile
+    void afiseazaInfo() ; // Suprascriem afișarea pentru a vedea tackle-urile
 };
 
 #endif

@@ -1,17 +1,14 @@
 ﻿#include "Jucator.h"
 
 Jucator::Jucator(const std::string& nume, int varsta, int rating)
-    : nume(nume), varsta(varsta), rating(rating), goluri(0), paseGol(0) {
+    : nume(nume), varsta(varsta), rating(rating), goluri(0){
 }
 
 Jucator::~Jucator() {}
 
-void Jucator::afiseazaInfo() const {
-    std::cout << "    " << nume
-        << " | " << getPozitie()
-        << " | Rating: " << rating
-        << " | G: " << goluri
-        << " | A: " << paseGol << std::endl;
+void Jucator::afiseazaInfo()  {
+    std::cout << "    " << nume << " | " << getPozitie() << " | Rating: " << rating;
+ 
 }
 
 int Jucator::getRating() const { return rating; }
@@ -20,4 +17,3 @@ int Jucator::getVarsta() const { return varsta; }
 int Jucator::getGoluri() const { return goluri; }
 
 void Jucator::marcheazaGol() { goluri++; }
-void Jucator::adaugaPasaGol() { paseGol++; }
