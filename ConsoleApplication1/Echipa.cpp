@@ -47,12 +47,11 @@ void Echipa::adaugaJucator(Jucator* j) {
     jucatori.push_back(j);
 }
 
-// AFISARE CORECTA: Fortam un singur jucator pe rand
 void Echipa::afiseazaEchipa() const {
     cout << "> ECHIPA: " << nume << " (Rating mediu: " << calculeazaRatingEchipa() << ")" << endl;
     for (auto j : jucatori) {
         j->afiseazaInfo();
-        cout << endl; // Acesta asigura ca urmatorul jucator incepe pe rand nou
+        cout << endl; 
     }
 }
 
@@ -96,14 +95,11 @@ int Echipa::getPuncte() const { return puncte; }
 void Echipa::joacaMeci(Echipa& e1, Echipa& e2) {
     int gol1 = 0, gol2 = 0;
     Jucator* p1 = nullptr, * p2 = nullptr;
-
     for (auto j : e1.jucatori) if (j->getPozitie() == "Portar") p1 = j;
     for (auto j : e2.jucatori) if (j->getPozitie() == "Portar") p2 = j;
-
     cout << "[MECI] " << e1.getNume() << " vs " << e2.getNume() << endl;
-
-    for (int faza = 1; faza <= 5;faza++) {
-        // Atac E1
+    for (int faza = 1; faza <= 5; faza++) {
+        // ATAC ECHIPA 1 
         vector<Jucator*> atacanti1;
         for (auto j : e1.jucatori) if (j->getPozitie() == "Atacant") atacanti1.push_back(j);
         Jucator* at1 = atacanti1[rand() % atacanti1.size()];
@@ -115,16 +111,40 @@ void Echipa::joacaMeci(Echipa& e1, Echipa& e2) {
                 if (Fundas* f = dynamic_cast<Fundas*>(def)) {
                     f->adaugaTackle();
                     cout << "[" << def->getNume() << " tackle]" << endl;
-                    blocat1 = true; break;
+                    blocat1 = true;
+                    break;
                 }
             }
         }
         if (!blocat1) {
-            if (rand() % 100 < p2->getRating()) { at1->marcheazaGol(); gol1++; cout << "GOL " << at1->getNume() << "!" << endl; }
+            if (rand() % 100 < p2->getRating()) {
+                at1->marcheazaGol();
+                gol1++;
+                cout << "GOL " << at1->getNume() << "!";
+                // LOGICA NOUA: Colectam TOTI mijlocasii eligibili
+                vector<Mijlocas*> mijlocasiEligibili;
+                for (auto m : e1.jucatori) {
+                    if (m->getPozitie() == "Mijlocas") {
+                        if (abs(m->getRating() - at1->getRating()) <= 10) {
+                            if (Mijlocas* mij = dynamic_cast<Mijlocas*>(m)) {
+                                mijlocasiEligibili.push_back(mij);
+                            }
+                        }
+                    }
+                }
+
+                // Daca am gasit mijlocasi care fac fata conditiei, alegem unul la intamplare
+                if (!mijlocasiEligibili.empty()) {
+                    Mijlocas* autorAsist = mijlocasiEligibili[rand() % mijlocasiEligibili.size()];
+                    autorAsist->adaugaPaseGol();
+                    cout << " (Asist: " << autorAsist->getNume() << ")";
+                }
+                cout << endl;
+            }
             else cout << "Apara portarul!" << endl;
         }
 
-        // Atac E2
+        //ATAC ECHIPA 2 
         vector<Jucator*> atacanti2;
         for (auto j : e2.jucatori) if (j->getPozitie() == "Atacant") atacanti2.push_back(j);
         Jucator* at2 = atacanti2[rand() % atacanti2.size()];
@@ -136,16 +156,41 @@ void Echipa::joacaMeci(Echipa& e1, Echipa& e2) {
                 if (Fundas* f = dynamic_cast<Fundas*>(def)) {
                     f->adaugaTackle();
                     cout << "[" << def->getNume() << " tackle]" << endl;
-                    blocat2 = true; break;
+                    blocat2 = true;
+                    break;
                 }
             }
         }
         if (!blocat2) {
-            if (rand() % 100 < p1->getRating()) { at2->marcheazaGol(); gol2++; cout << "GOL " << at2->getNume() << "!" << endl; }
+            if (rand() % 100 < p1->getRating()) {
+                at2->marcheazaGol();
+                gol2++;
+                cout << "GOL " << at2->getNume() << "!";
+
+                // LOGICA NOUA: Colectam TOTI mijlocasii eligibili pentru Echipa 2
+                vector<Mijlocas*> mijlocasiEligibili;
+                for (auto m : e2.jucatori) {
+                    if (m->getPozitie() == "Mijlocas") {
+                        if (abs(m->getRating() - at2->getRating()) <= 10) {
+                            if (Mijlocas* mij = dynamic_cast<Mijlocas*>(m)) {
+                                mijlocasiEligibili.push_back(mij);
+                            }
+                        }
+                    }
+                }
+
+                if (!mijlocasiEligibili.empty()) {
+                    Mijlocas* autorAsist = mijlocasiEligibili[rand() % mijlocasiEligibili.size()];
+                    autorAsist->adaugaPaseGol();
+                    cout << " (Asist: " << autorAsist->getNume() << ")";
+                }
+                cout << endl;
+            }
             else cout << "Apara portarul!" << endl;
         }
     }
-    cout << "REZULTAT: " << e1.getNume() << " " << gol1 << "-" << gol2 << " " << e2.getNume() << endl;
+
+    cout << "REZULTAT FINAL: " << e1.getNume() << " " << gol1 << "-" << gol2 << " " << e2.getNume() << endl;
 
     if (gol1 > gol2) e1.adaugaPuncte(3);
     else if (gol2 > gol1) e2.adaugaPuncte(3);
