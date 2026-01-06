@@ -44,12 +44,10 @@ int main() {
                 e->genereazaJucatoriRandom(11);
                 echipe.push_back(e);
             }
-
             meciuriJucate = false;
             cout << "Au fost generate " << nrEchipe << " echipe.\n";
             break;
         }
-
         case 2: {
             if (echipe.empty()) {
                 cout << "Nu exista echipe generate!\n";
@@ -67,7 +65,6 @@ int main() {
                 cout << "Nu exista echipe generate!\n";
                 break;
             }
-
             cout << "\n=== Incep meciurile (tur-retur) ===\n";
 
             for (int i = 0; i < nrEchipe; i++) {
@@ -84,7 +81,6 @@ int main() {
             cout << "\n=== Toate meciurile s-au terminat. Verifica clasamentul! ===\n";
             break;
         }
-
         case 4: {
             if (echipe.empty()) {
                 cout << "Nu exista echipe generate!\n";
@@ -93,13 +89,10 @@ int main() {
             if (!meciuriJucate) {
                 cout << "ATENTIE: Meciurile nu au fost jucate inca! Clasamentul este initial.\n";
             }
-
-           
-            sort(echipe.begin(), echipe.end(),
-                [](Echipa* a, Echipa* b) {
+            sort(echipe.begin(), echipe.end(), [](Echipa* a, Echipa* b)
+               {
                     return a->getPuncte() > b->getPuncte();
                 });
-
             cout << "\n=== CLASAMENT FINAL (Doar Puncte) ===\n";
             cout << "Loc | Echipa       | Puncte \n";
             cout << "---------------------------\n";
@@ -111,7 +104,6 @@ int main() {
 
             break;
         }
-
         case 0:
             cout << "Iesire din program.\n";
             break;
@@ -119,10 +111,7 @@ int main() {
         default:
             cout << "Optiune invalida!\n";
         }
-
     } while (optiune != 0);
-
     for (auto e : echipe) delete e;
-
     return 0;
 }

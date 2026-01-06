@@ -1,16 +1,16 @@
 ﻿#ifndef MIJLOCAS_H
 #define MIJLOCAS_H
-
+using namespace std;
 #include "Jucator.h"
 
 class Mijlocas : public Jucator {
 protected:
     int paseGol;
 public:
-    Mijlocas(const std::string& nume, int varsta, int rating);
+    Mijlocas(const string& nume, int varsta, int rating);
     int getPaseGol() const;
     void adaugaPaseGol();
-    std::string getPozitie() const override;
+    string getPozitie() const ;
     bool verificaPasaDecisiva(int ratingAtacant) const;
     void afiseazaInfo();
 };

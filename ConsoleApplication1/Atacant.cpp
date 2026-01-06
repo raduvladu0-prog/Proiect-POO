@@ -1,6 +1,6 @@
 ﻿#include "Atacant.h"
 #include <iostream>
-
+using namespace std;
 Atacant::Atacant(const std::string& nume, int varsta, int rating)
     : Jucator(nume, varsta, rating), goluri(0) {
 }
@@ -19,5 +19,5 @@ int Atacant::getGoluri() const {
 
 void Atacant::afiseazaInfo() {
     Jucator::afiseazaInfo();
-    std::cout << " | Goluri: " << goluri << std::endl;
+    cout << " | Goluri: " << goluri << endl;
 }
