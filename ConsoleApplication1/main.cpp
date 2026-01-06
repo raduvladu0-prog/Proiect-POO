@@ -94,7 +94,7 @@ int main() {
                 cout << "ATENTIE: Meciurile nu au fost jucate inca! Clasamentul este initial.\n";
             }
 
-            // SORTARE DOAR DUPA PUNCTE
+           
             sort(echipe.begin(), echipe.end(),
                 [](Echipa* a, Echipa* b) {
                     return a->getPuncte() > b->getPuncte();

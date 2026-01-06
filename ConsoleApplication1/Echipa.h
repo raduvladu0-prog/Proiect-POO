@@ -15,8 +15,6 @@ private:
     std::vector<Jucator*> jucatori;
     int puncte;
 
-    Jucator* genereazaJucatorRandom();
-
 public:
     Echipa();
     ~Echipa();

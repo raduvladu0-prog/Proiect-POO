@@ -2,17 +2,18 @@
 #define ATACANT_H
 
 #include "Jucator.h"
+using namespace std;
 
 class Atacant : public Jucator {
 private:
     int goluri;
 public:
-    Atacant(const std::string& nume, int varsta, int rating);
+    Atacant(const string& nume, int varsta, int rating);
 
-    std::string getPozitie() const override;
-    int getGoluri() ;
+    string getPozitie() const override;
+    int getGoluri() const;
     void marcheazaGol();
-    void afiseazaInfo(); 
+    void afiseazaInfo() override;
 };
 
 #endif

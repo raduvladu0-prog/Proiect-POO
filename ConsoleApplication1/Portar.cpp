@@ -1,7 +1,8 @@
 ﻿#include "Portar.h"
 #include <iostream>
+using namespace std;
 
-Portar::Portar(const std::string& nume, int varsta, int rating)
+Portar::Portar(const string& nume, int varsta, int rating)
     : Jucator(nume, varsta, rating), penaltyuriAparate(0) {
 }
 
@@ -14,6 +15,6 @@ void Portar::incrementeazaPenaltyuriAparate() {
 }
 
 void Portar::afiseazaInfo()  {
-    Jucator::afiseazaInfo(); // Afișează nume, poziție, rating
-    std::cout << " | Pen. Aparate: " << penaltyuriAparate << std::endl;
+    Jucator::afiseazaInfo(); 
+   cout << " | Pen. Aparate: " << penaltyuriAparate <<endl;
 }

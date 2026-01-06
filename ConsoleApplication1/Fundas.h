@@ -1,18 +1,19 @@
 ﻿#ifndef FUNDAS_H
 #define FUNDAS_H
+using namespace std;
 
 #include "Jucator.h"
 
 class Fundas : public Jucator {
 private:
-    int tackleuriReusite; // Noua variabilă
+    int tackleuriReusite; 
 
 public:
-    Fundas(const std::string& nume, int varsta, int rating);
-    std::string getPozitie() const override;
+    Fundas(const string& nume, int varsta, int rating);
+    string getPozitie() const override;
 
-    void adaugaTackle(); // Metodă nouă
-    void afiseazaInfo() ; // Suprascriem afișarea pentru a vedea tackle-urile
+    void adaugaTackle(); 
+    void afiseazaInfo() ;
 };
 
 #endif

@@ -1,21 +1,23 @@
-﻿    #include "Atacant.h"
-    #include <iostream>
-    Atacant::Atacant(const std::string& nume, int varsta, int rating)
-        : Jucator(nume, varsta, rating), goluri(0){
-    }
+﻿#include "Atacant.h"
+#include <iostream>
 
-    std::string Atacant::getPozitie() const {
-        return "Atacant";
-    }
+Atacant::Atacant(const std::string& nume, int varsta, int rating)
+    : Jucator(nume, varsta, rating), goluri(0) {
+}
 
-    void Atacant::marcheazaGol() {
-        goluri++;
-    }
-    int Atacant::getGoluri()
-    {
-        return goluri;
-    }
-    void Atacant::afiseazaInfo()  {
-        Jucator::afiseazaInfo();
-        std::cout << " | Goluri: " << goluri << std::endl;
-    }
+std::string Atacant::getPozitie() const {
+    return "Atacant";
+}
+
+void Atacant::marcheazaGol() {
+    goluri++;
+}
+
+int Atacant::getGoluri() const {
+    return goluri;
+}
+
+void Atacant::afiseazaInfo() {
+    Jucator::afiseazaInfo();
+    std::cout << " | Goluri: " << goluri << std::endl;
+}
