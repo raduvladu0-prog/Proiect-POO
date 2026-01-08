@@ -3,22 +3,23 @@
 
 #include <string>
 #include <iostream>
+using namespace std;
 
 class Jucator {
 protected:
-    std::string nume;
+    string nume;
     int varsta;
     int rating;
 
 public:
-    Jucator(const std::string& nume, int varsta, int rating);
-    virtual ~Jucator();
+    Jucator(const string& nume, int varsta, int rating);
+    virtual ~Jucator() = default;
 
-    virtual std::string getPozitie() const = 0;
-    virtual void afiseazaInfo();
+    virtual string getPozitie() const = 0;
+    virtual void afiseazaInfo()=0;
 
     int getRating() const;
-    std::string getNume() const;
+    string getNume() const;
     int getVarsta() const;
 };
 

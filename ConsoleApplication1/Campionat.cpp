@@ -3,7 +3,7 @@
 #include <algorithm>
 using namespace std;
 
-Campionat::Campionat() : meciuriJucate(false) {}
+Campionat::Campionat() : echipe(), meciuriJucate(false) {}
 
 Campionat::~Campionat() {
     for (auto e : echipe) delete e;

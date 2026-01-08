@@ -8,11 +8,11 @@
 #include "Fundas.h"
 #include "Mijlocas.h"
 #include "Portar.h"
-
+using namespace std;
 class Echipa {
 private:
-    std::string nume;
-    std::vector<Jucator*> jucatori;
+    string nume;
+    vector<Jucator*> jucatori;
     int puncte;
 
 public:
@@ -26,7 +26,7 @@ public:
 
     void adaugaPuncte(int p);
 
-    std::string getNume() const;
+    string getNume() const;
     int getPuncte() const;
 
     static void joacaMeci(Echipa& e1, Echipa& e2);

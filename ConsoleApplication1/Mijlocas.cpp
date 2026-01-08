@@ -17,7 +17,7 @@ int Mijlocas::getPaseGol() const {
 }
 bool Mijlocas::verificaPasaDecisiva(int ratingAtacant) const {
    
-    return std::abs(this->rating - ratingAtacant) <=50;
+    return abs(this->rating - ratingAtacant) <=50;
 }
 void Mijlocas::afiseazaInfo()  {
     Jucator::afiseazaInfo();

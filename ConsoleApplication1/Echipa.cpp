@@ -39,19 +39,17 @@ Echipa::~Echipa() {
 void Echipa::adaugaJucator(Jucator* j) {
     jucatori.push_back(j);
 }
-
-void Echipa::afiseazaEchipa() const {
-    cout << "> ECHIPA: " << nume << " (Rating mediu: " << calculeazaRatingEchipa() << ")" << endl;
-    for (auto j : jucatori) {
-        j->afiseazaInfo();
-    }
-}
-
 int Echipa::calculeazaRatingEchipa() const {
     if (jucatori.empty()) return 0;
     int suma = 0;
     for (auto j : jucatori) suma += j->getRating();
     return suma / (int)jucatori.size();
+}
+void Echipa::afiseazaEchipa() const {
+    cout << "> ECHIPA: " << nume << " (Rating mediu: " << calculeazaRatingEchipa() << ")" << endl;
+    for (auto j : jucatori) {
+        j->afiseazaInfo();
+    }
 }
 
 void Echipa::genereazaJucatoriRandom(int nr_jucatori_ignorat) {
