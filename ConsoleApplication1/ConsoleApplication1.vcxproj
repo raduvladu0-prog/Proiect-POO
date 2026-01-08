@@ -125,6 +125,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Atacant.cpp" />
+    <ClCompile Include="Campionat.cpp" />
     <ClCompile Include="Echipa.cpp" />
     <ClCompile Include="Fundas.cpp" />
     <ClCompile Include="Jucator.cpp" />
@@ -134,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Atacant.h" />
+    <ClInclude Include="Campionat.h" />
     <ClInclude Include="Echipa.h" />
     <ClInclude Include="Fundas.h" />
     <ClInclude Include="Jucator.h" />

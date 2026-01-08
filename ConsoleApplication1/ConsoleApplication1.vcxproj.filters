@@ -36,6 +36,9 @@
     <ClCompile Include="Portar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Campionat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Jucator.h">
@@ -54,6 +57,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Portar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Campionat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
