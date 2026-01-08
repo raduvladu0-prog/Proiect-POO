@@ -129,7 +129,7 @@ void Echipa::joacaMeci(Echipa& e1, Echipa& e2) {
                 cout << endl;
             }
             else {
-                // MODIFICARE: Incrementare penalty-uri/intervenții pentru portarul echipei 2
+                
                 if (Portar* ptr = dynamic_cast<Portar*>(p2)) {
                     ptr->incrementeazaPenaltyuriAparate();
                 }
@@ -137,7 +137,7 @@ void Echipa::joacaMeci(Echipa& e1, Echipa& e2) {
             }
         }
 
-        // --- ATAC ECHIPA 2 ---
+        
         vector<Jucator*> atacanti2;
         for (auto j : e2.jucatori) if (j->getPozitie() == "Atacant") atacanti2.push_back(j);
         Jucator* at2 = atacanti2[rand() % atacanti2.size()];

@@ -2,25 +2,27 @@
 #define CAMPIONAT_H
 
 #include <vector>
+#include <string>
 #include "Echipa.h"
 using namespace std;
-
-
 class Campionat {
 private:
-    vector<Echipa*> echipe;
+   vector<Echipa*> echipe;
     bool meciuriJucate;
 
 public:
     Campionat();
     ~Campionat();
 
-    void genereazaEchipe(int nrEchipe);
+    void genereazaEchipe(int nr);
     void afiseazaStatistici() const;
-    void joacaToateMeciurile();
+    void simuleazaCampionat();
     void afiseazaClasament() const;
+
+   
+    void pornesteAplicatie();
+
     bool areEchipe() const { return !echipe.empty(); }
-    bool auFostJucateMeciurile() const { return meciuriJucate; }
 };
 
 #endif
